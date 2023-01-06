@@ -13,6 +13,12 @@ class Robot():
 
     # Getter / Setter
 
+    def get_name(self):
+        return self.__name
+
+    def set_name(self,name):
+            self.__name = name
+
     def get_battery_level(self):
         return self.__battery_level
 
@@ -38,12 +44,12 @@ class Robot():
 
     def recharge(self,battery_level):
 
-        i = Robot.get_battery_level(self)
+        i = self.get_battery_level()
         
         for i in range(battery_level+1):
-        #for Robot.get_battery_level() < battery_level:
+        #for self.get_battery_level() < battery_level:
         
-            Robot.set_battery_level(self,i)
+            self.set_battery_level(i)
             time.sleep(0.05)         
             print("Charge en cours : ",i,"%")
 
@@ -55,18 +61,39 @@ class Robot():
         else:
             print("Déplacement déjà en cours ...")
 
-        if(Robot.get_current_speed == 0):
-            Robot.set_current_speed(self,50) 
+        if(self.get_current_speed() == 0):
+            self.set_current_speed(50) 
         return self.move_flag 
     
-    #def stop(self):
+    def stop(self):
+
+        if(self.move_flag == True):
+            print("Arrêt déplacement du robot ...")
+            self.move_flag = False
+        else:
+            print("Robot déjà à l'arrêt ...")
+
+        if(self.get_current_speed > 0):
+            self.set_current_speed(0) 
+        return self.move_flag 
+
+
+    def resume_state_robot(self):
+
+        print("Name :",self.get_name())
+        print("Battery level :",self.get_battery_level(),"%")
+        print("Vitesse de déplacement :",self.get_current_speed(),"kts")
 
 r = Robot()
 
-print(r.get_battery_level())
-r.set_current_speed(50)
-print(r.get_current_speed())
-#r.recharge(50)
-#print("Fin de charge : ",r.get_battery_level(),"%")
+# print(r.get_battery_level())
+# r.set_current_speed(50)
+# print(r.get_current_speed())
+# #r.recharge(50)
+# #print("Fin de charge : ",r.get_battery_level(),"%")
 
+# r.move()
+
+r.recharge(35)
 r.move()
+r.resume_state_robot()
