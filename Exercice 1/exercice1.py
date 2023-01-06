@@ -89,7 +89,7 @@ class Robot():
         print("State : ",self.get_state())
         print("Name :",self.get_name())
         print("Battery level :",self.get_battery_level(),"%")
-        print("Vitesse de déplacement :",self.get_current_speed(),"kts")
+        print("Current speed :",self.get_current_speed(),"kts")
 
     def create_robot(self): 
         
