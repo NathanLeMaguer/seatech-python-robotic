@@ -1,17 +1,28 @@
 import time 
 
+
+
 class Robot():
 
    # __slots__ = ('name', 'power','speed') 
 
     __name = "<unnamed>"
-    __power = False
     __current_speed = 0
     __battery_level = 0
-    __states = ['shutown', 'running']
+    states = ['shutown', 'running']
+    __state = states[0]
     move_flag = False 
 
     # Getter / Setter
+
+    def power_on(self):
+        self.__state = self.states[1]
+
+    def power_off(self):
+        self.__state = self.states[0]
+
+    def get_state (self):
+        return self.__state
 
     def get_name(self):
         return self.__name
@@ -41,6 +52,8 @@ class Robot():
     def set_power_off(self):
         print('Power OFF')
         __power = False
+
+    # Méthodes    
 
     def recharge(self,battery_level):
 
@@ -80,20 +93,14 @@ class Robot():
 
     def resume_state_robot(self):
 
+        print("State : ",self.get_state())
         print("Name :",self.get_name())
         print("Battery level :",self.get_battery_level(),"%")
         print("Vitesse de déplacement :",self.get_current_speed(),"kts")
 
 r = Robot()
-
-# print(r.get_battery_level())
-# r.set_current_speed(50)
-# print(r.get_current_speed())
-# #r.recharge(50)
-# #print("Fin de charge : ",r.get_battery_level(),"%")
-
-# r.move()
-
+r.set_name("Jean-Michelle")
+r.power_on()
 r.recharge(35)
 r.move()
 r.resume_state_robot()
