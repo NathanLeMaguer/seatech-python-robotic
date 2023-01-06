@@ -1,6 +1,5 @@
 import time 
-
-
+import math 
 
 class Robot():
 
@@ -15,9 +14,12 @@ class Robot():
 
     def power_on(self):
         self.__state = self.states[1]
+        print("Power ON ...")
 
     def power_off(self):
         self.__state = self.states[0]
+        print("Power OFF ...")
+        self.stop()
 
     def get_state (self):
         return self.__state
@@ -39,7 +41,7 @@ class Robot():
 
     def set_current_speed(self, current_speed):
         if(current_speed > 100 or current_speed < -100):
-            raise Exception("Vitesse non comprise dans la gamme. La vitesse dit être comprise entre -100 et 100 kts")
+            raise Exception("Vitesse non comprise dans la gamme. La vitesse doit être comprise entre -100 et 100 kts")
 
         self.__current_speed = current_speed
 
@@ -78,7 +80,7 @@ class Robot():
         else:
             print("Robot déjà à l'arrêt ...")
 
-        if   (self.get_current_speed > 0):
+        if   (self.get_current_speed() > 0):
             self.set_current_speed(0) 
         return self.move_flag 
 
@@ -93,7 +95,16 @@ class Robot():
 r = Robot()
 r.set_name("Jean-Michelle")
 r.power_on()
-r.recharge(12)
+try : 
+    r.recharge(-12)
+except Exception as error : 
+    print(error)
+    print("Tentative de recharge en cours ...")
+    try : 
+        r.recharge(35)
+    except Exception as error2 : 
+        print(error2)
+        print("Arrêt tentative de recharge")
 
 r.move()
 
@@ -101,11 +112,14 @@ try :
     r.set_current_speed(-102)
 except Exception as error :
     print(error)
-    print("Tentative de mofication vitesse ...")
+    print("Tentative de mofication vitesse en cours ...")
     try : 
         r.set_current_speed(75)
     except Exception as error2 : 
         print(error2)
-        print("Arrêt tentative modification vitesse")     
+        print("Arrêt tentative de modification de vitesse")     
     
 r.resume_state_robot()
+
+r.power_off()
+
