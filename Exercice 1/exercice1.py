@@ -97,38 +97,42 @@ class Robot():
         self.set_name(name)
         battery_level = input("Choisir niveau de batterie : ")
         self.set_battery_level(battery_level)
+
+if __name__ == "__main__":
+
+    r = Robot()
+    r.set_name("Jean-Michelle")
+    r.power_on()
+    try : 
+        r.recharge(-12)
+    except Exception as error : 
+        print(error)
+        print("Tentative de recharge en cours ...")
+        try : 
+            r.recharge(35)
+        except Exception as error2 : 
+            print(error2)
+            print("Arrêt tentative de recharge")
+
+    r.move()
+
+    try : 
+        r.set_current_speed(-102)
+    except Exception as error :
+        print(error)
+        print("Tentative de mofication vitesse en cours ...")
+        try : 
+            r.set_current_speed(75)
+        except Exception as error2 : 
+            print(error2)
+            print("Arrêt tentative de modification de vitesse")     
         
-r = Robot()
-r.set_name("Jean-Michelle")
-r.power_on()
-try : 
-    r.recharge(-12)
-except Exception as error : 
-    print(error)
-    print("Tentative de recharge en cours ...")
-    try : 
-        r.recharge(35)
-    except Exception as error2 : 
-        print(error2)
-        print("Arrêt tentative de recharge")
+    r.resume_state_robot()
 
-r.move()
+    r.power_off()
 
-try : 
-    r.set_current_speed(-102)
-except Exception as error :
-    print(error)
-    print("Tentative de mofication vitesse en cours ...")
-    try : 
-        r.set_current_speed(75)
-    except Exception as error2 : 
-        print(error2)
-        print("Arrêt tentative de modification de vitesse")     
-    
-r.resume_state_robot()
+    r2 = Robot()
+    r2.create_robot()
+    r2.resume_state_robot()
 
-r.power_off()
-
-r2 = Robot()
-r2.create_robot()
-r2.resume_state_robot()
+    r2.recharge()
