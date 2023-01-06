@@ -42,17 +42,6 @@ class Robot():
     def set_current_speed(self, current_speed):
         self.__current_speed = current_speed
 
-    def get_power(self):
-        return self.__power
-
-    def set_power_on(self):
-        print('Power ON')
-        __power = True 
-
-    def set_power_off(self):
-        print('Power OFF')
-        __power = False
-
     # Méthodes    
 
     def recharge(self,battery_level):
