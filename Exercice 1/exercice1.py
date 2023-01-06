@@ -1,5 +1,4 @@
 import time 
-import math 
 
 class Robot():
 
@@ -92,6 +91,13 @@ class Robot():
         print("Battery level :",self.get_battery_level(),"%")
         print("Vitesse de déplacement :",self.get_current_speed(),"kts")
 
+    def create_robot(self): 
+        
+        name = input("Choisir un nom: " )
+        self.set_name(name)
+        battery_level = input("Choisir niveau de batterie : ")
+        self.set_battery_level(battery_level)
+        
 r = Robot()
 r.set_name("Jean-Michelle")
 r.power_on()
@@ -123,3 +129,6 @@ r.resume_state_robot()
 
 r.power_off()
 
+r2 = Robot()
+r2.create_robot()
+r2.resume_state_robot()
