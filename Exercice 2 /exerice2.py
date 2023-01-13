@@ -18,6 +18,9 @@ class Human():
         else:
             self.__sexe = sexe
 
+    def __str__(self):
+        return self.__sexe
+
     # Getter / Setter
 
     @property
@@ -66,6 +69,9 @@ class Cyborg(Robot, Human):
         Robot.__init__(self, name)
         Human.__init__(self, sexe)
 
+    def __str__(self):
+        return Robot.__str__(self) + " is a " + Human.__str__(self)
+
 if __name__ == "__main__":
 
     cyborg = Cyborg('Deux Ex Machina','male')
@@ -76,4 +82,4 @@ if __name__ == "__main__":
     cyborg.eat('banana')
     cyborg.eat(['coca', 'chips'])
     cyborg.digest()
-
+    print(cyborg)

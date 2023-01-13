@@ -12,6 +12,9 @@ class Robot():
     def __init__(self,name='Mathieu'):
         self.__name=name
 
+    def __str__(self):
+        return self.__name
+
     # Getter / Setter
 
     def power_on(self):
