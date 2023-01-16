@@ -8,27 +8,28 @@ class UnmannedVehicle(metaclass=ABCMeta):
         This mission can be configured by an operator.
     """
 
-    __state__ = True
+    __state = True
 
-    @abstractmethod
     def start(self):
-
-         #self.__state__ = True 
-         #print("Démarrage ...")
-        pass
+          self.__state = True 
+          self.start_vehicule()
 
     @abstractmethod
-    def stop(self):
+    def start_vehicule(self):
+          pass
 
-         #self.__state__ = False
-         #print ("Arrêt ...")
-        pass
+    def stop(self):
+          self.__state = False
+          self.stop_vehicule()
+
+    @abstractmethod
+    def stop_vehicule(self):
+          pass
 
     @abstractmethod
     def move(self):
-         #print("Le véhicule avance")
-        pass
 
+        raise Exception("A implémenter")
 
 class AerialVehicle():
     """ A vehicle made for fly."""
@@ -51,14 +52,12 @@ class UnderseaVehicle():
 class UAV(UnmannedVehicle, AerialVehicle):
     """Unmanned Aerial Vehicle"""
     
-    def start(self):
+    def start_vehicule(self):
 
-         self.__state__ = True 
          print("Démarrage du moteur diesel ...")
 
-    def stop(self):
+    def stop_vehicule(self):
 
-         self.__state__ = False
          print ("Arrêt du moteur diesel ...")
 
     def move(self):
@@ -67,14 +66,12 @@ class UAV(UnmannedVehicle, AerialVehicle):
 class UUV(UnmannedVehicle, UnderseaVehicle):
     """Unmanned Undersea Vehicle"""
 
-    def start(self):
+    def start_vehicule(self):
 
-         self.__state__ = True 
          print("Démarrage du réacteur nucléaire ...")
 
-    def stop(self):
+    def stop_vehicule(self):
 
-         self.__state__ = False
          print ("Arrêt du réacteur nucléaire ...")
 
     def move(self):
@@ -82,14 +79,12 @@ class UUV(UnmannedVehicle, UnderseaVehicle):
 
 class UGV(UnmannedVehicle, GroundVehicle):
     
-    def start(self):
+    def start_vehicule(self):
 
-         self.__state__ = True 
          print("Démarrage du moteur électrique ...")
 
-    def stop(self):
+    def stop_vehicule(self):
 
-         self.__state__ = False
          print ("Arrêt du moteur électrique ...")
 
     def move(self):
@@ -101,10 +96,11 @@ if __name__ == '__main__':
     uav.start()
     uav.move()
 
-    # ugv = UGV()
-    # ugv.do_something_interesting()
-    # ugv.do_something_ground_specific()
+    ugv = UGV()
+    ugv.start()
+    ugv.move()
 
-    # uuv = UUV()
-    # uuv.do_something_interesting()
-    # uuv.do_something_undersea_specific() 
+    uuv = UUV()
+    uuv.start()
+    uuv.move() 
+
