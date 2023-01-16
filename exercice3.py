@@ -10,6 +10,14 @@ class UnmannedVehicle(metaclass=ABCMeta):
 
     __state = False
 
+    @property 
+    def state(self):
+          return self.__state
+
+    @state.setter
+    def state(self, state):
+          self.__state = state
+
     def start(self):
           """
                Change bool variable state to True 
@@ -25,7 +33,7 @@ class UnmannedVehicle(metaclass=ABCMeta):
           """
                Abstract method of Start
           """
-          pass
+          pass #Ou Exception
 
     def stop(self):
           """
@@ -95,15 +103,25 @@ class UAV(UnmannedVehicle, AerialVehicle):
 class UUV(UnmannedVehicle, UnderseaVehicle):
     """Unmanned Undersea Vehicle"""
 
+    __state_control_bar = True
+    
     def start_vehicule(self):
+         if(self.__state_control_bar == False):
+          print("Démarrage du réacteur nucléaire ...")
+          self.state = True
+         else:
+          print("Barre de contrôle descendues - Erreur - Absorption neutronique trop importante")
+          self.state = False 
 
-         print("Démarrage du réacteur nucléaire ...")
+    def move_control_bar(self, state_control_bar):
+         self.__state_control_bar = state_control_bar
 
     def stop_vehicule(self):
 
          print ("Arrêt du réacteur nucléaire ...")
 
     def move_vehicule(self):
+
          print("L'hélice tourne et crée de la cavitation")
 
 class UGV(UnmannedVehicle, GroundVehicle):
@@ -131,6 +149,8 @@ if __name__ == '__main__':
 
     uuv = UUV()
     uuv.start()
+    uuv.move_control_bar(False)
+    uuv.start()
     uuv.move() 
 
-    help(UnmannedVehicle)
+
