@@ -8,28 +8,57 @@ class UnmannedVehicle(metaclass=ABCMeta):
         This mission can be configured by an operator.
     """
 
-    __state = True
+    __state = False
 
     def start(self):
-          self.__state = True 
-          self.start_vehicule()
+          """
+               Change bool variable state to True 
+          """
+          if(self.__state == False):
+               self.__state = True 
+               self.start_vehicule()
+          else:
+               print("Véhicule déjà démarré ...")
 
     @abstractmethod
     def start_vehicule(self):
+          """
+               Abstract method of Start
+          """
           pass
 
     def stop(self):
-          self.__state = False
-          self.stop_vehicule()
+          """
+               Change bool variable state to False
+          """
+          if(self.__state == True):
+               self.__state = False
+               self.stop_vehicule()
+          else:
+               print("Véhicule déjà à l'arrêt ...")
 
     @abstractmethod
     def stop_vehicule(self):
+          """
+               Abstract method of Stop
+          """
           pass
 
-    @abstractmethod
     def move(self):
+          """
+               Check possibility to move 
+          """
+          if(self.__state == True):
+               self.move_vehicule()
+          else:
+               print("Véhicule à l'arrêt - Erreur")
 
-        raise Exception("A implémenter")
+    @abstractmethod
+    def move_vehicule(self):
+          """
+               Abstract method of Move
+          """
+          pass
 
 class AerialVehicle():
     """ A vehicle made for fly."""
@@ -60,7 +89,7 @@ class UAV(UnmannedVehicle, AerialVehicle):
 
          print ("Arrêt du moteur diesel ...")
 
-    def move(self):
+    def move_vehicule(self):
          print("L'hélice tourne")
 
 class UUV(UnmannedVehicle, UnderseaVehicle):
@@ -74,7 +103,7 @@ class UUV(UnmannedVehicle, UnderseaVehicle):
 
          print ("Arrêt du réacteur nucléaire ...")
 
-    def move(self):
+    def move_vehicule(self):
          print("L'hélice tourne et crée de la cavitation")
 
 class UGV(UnmannedVehicle, GroundVehicle):
@@ -87,7 +116,7 @@ class UGV(UnmannedVehicle, GroundVehicle):
 
          print ("Arrêt du moteur électrique ...")
 
-    def move(self):
+    def move_vehicule(self):
          print("Les roues tournent")
 
 if __name__ == '__main__':
@@ -104,3 +133,4 @@ if __name__ == '__main__':
     uuv.start()
     uuv.move() 
 
+    help(UnmannedVehicle)
