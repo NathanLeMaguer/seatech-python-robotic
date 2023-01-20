@@ -9,11 +9,17 @@ class FugitiveRobot(Robot):
          super().__init__()
          self.__motors = FugitiveRobotMotors()
 
-    def run(self, backward=False, forward=False):
+    def run(self, backward=False, forward=False, left=False, right=False):
         if (forward == True) : 
             self.__motors.go_front()
-        else :
+        if(backward == True) : 
             self.__motors.go_back()
+        if(left == True) : 
+            self.__motors.go_left()
+        if(right == True) : 
+            self.__motors.go_right()
+        else : 
+            self.__motors.go_front_fast()
 
 class FugitiveRobotMotor(Motor): 
 
@@ -35,7 +41,17 @@ class FugitiveRobotMotors():
         self.__left_wheel_motor.setVelocity(-5)
         self.__right_wheel_motor.setVelocity(-5)
 
+    def go_left(self):
+        self.__left_wheel_motor.setVelocity(-5)
+        self.__right_wheel_motor.setVelocity(5)
 
+    def go_right(self):
+        self.__left_wheel_motor.setVelocity(5)
+        self.__right_wheel_motor.setVelocity(-5)
+
+    def go_front_fast(self):
+        self.__left_wheel_motor.setVelocity(25)
+        self.__right_wheel_motor.setVelocity(25)
 
 # create the Robot instance.
 robot = FugitiveRobot()
@@ -60,6 +76,6 @@ while robot.step(timestep) != -1:
 
     # Enter here functions to send actuator commands, like:
     #  motor.setPosition(10.0)
-    robot.run(forward=False)
+    robot.run()
 
 # Enter here exit cleanup code.
