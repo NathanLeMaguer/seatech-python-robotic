@@ -7,7 +7,13 @@ from controller import Robot, Motor, DistanceSensor
 class FugitiveRobot(Robot):
     def __init__(self):
          super().__init__()
-         wheels = FugitiveRobotMotors
+         self.__motors = FugitiveRobotMotors()
+
+    def run(self, backward=False, forward=False):
+        if (forward == True) : 
+            self.__motors.go_front()
+        else :
+            self.__motors.go_back()
 
 class FugitiveRobotMotor(Motor): 
 
@@ -24,6 +30,11 @@ class FugitiveRobotMotors():
     def go_front(self):
         self.__left_wheel_motor.setVelocity(5)
         self.__right_wheel_motor.setVelocity(5)
+
+    def go_back(self):
+        self.__left_wheel_motor.setVelocity(-5)
+        self.__right_wheel_motor.setVelocity(-5)
+
 
 
 # create the Robot instance.
@@ -49,6 +60,6 @@ while robot.step(timestep) != -1:
 
     # Enter here functions to send actuator commands, like:
     #  motor.setPosition(10.0)
-    robot.go_front()
+    robot.run(forward=False)
 
 # Enter here exit cleanup code.
