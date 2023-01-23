@@ -15,7 +15,7 @@ class FugitiveRobot(Robot):
          super().__init__()
          self.__motors = FugitiveRobotMotors()
          self.__distances = FugitiveRobotSensors()
-         self.gps = FugitiveRobotGPS()
+         self.__gps = FugitiveRobotGPS()
 
     def run(self, backward=False, forward=False, left=False, right=False):
         if (forward == True) : 
@@ -121,12 +121,11 @@ timestep = int(robot.getBasicTimeStep())
 while robot.step(timestep) != -1:
     # Read the sensors:
     # Enter here functions to read sensor data, like:
-    robot.distances.enable(timestep)
 
     #val = robot.distances.getDistanceValue()
-    val = robot.distance_detection() 
+    #val = robot.distance_detection() 
 
-    #val = robot.gps.getCoordinates()
+    val = robot.coordinates()
     print(val)
     #robot.run()
 
