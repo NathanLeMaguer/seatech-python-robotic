@@ -8,13 +8,14 @@
 # https://cyberbotics.com/doc/guide/tutorial-4-more-about-controllers?tab-language=python -> Lesson
 # https://cyberbotics.com/doc/guide/khepera3 -> Robot parameters 
 
-from controller import Robot, Motor, DistanceSensor
+from controller import *
 
 class FugitiveRobot(Robot):
     def __init__(self):
          super().__init__()
          self.__motors = FugitiveRobotMotors()
          self.distances = FugitiveRobotSensors()
+         self.gps = FugitiveRobotGPS()
 
     def run(self, backward=False, forward=False, left=False, right=False):
         if (forward == True) : 
@@ -28,8 +29,11 @@ class FugitiveRobot(Robot):
         else : 
             self.__motors.go_front_fast()  
 
-    def getDistance(self):
-        self.__distances.getDistanceValue()
+    # def getDistance(self):
+    #     self.__distances.getDistanceValue()
+
+    def getCoordinates(self):
+        self.__gps.getCoordinates()
 
 class FugitiveRobotMotor(Motor): 
 
@@ -72,6 +76,11 @@ class FugitiveRobotSensors():
         self.__ds7_sensor = DistanceSensor('ds7')
         self.__ds8_sensor = DistanceSensor('ds8')
         self.__ds9_sensor = DistanceSensor('ds9')
+        self.__us0_sensor = DistanceSensor('us0')
+        self.__us1_sensor = DistanceSensor('us1')
+        self.__us2_sensor = DistanceSensor('us2')
+        self.__us3_sensor = DistanceSensor('us3')
+        self.__us4_sensor = DistanceSensor('us4')
     
     def enable(self,timestep:int) -> None :
         self.__ds0_sensor.enable(timestep)
@@ -85,10 +94,26 @@ class FugitiveRobotSensors():
         self.__ds7_sensor.enable(timestep)
         self.__ds8_sensor.enable(timestep)
         self.__ds9_sensor.enable(timestep)
+        self.__us0_sensor.enable(timestep)
+        self.__us1_sensor.enable(timestep)
+        self.__us2_sensor.enable(timestep)
+        self.__us3_sensor.enable(timestep)
+        self.__us4_sensor.enable(timestep)
 
     def getDistanceValue(self):
         return [self.__ds0_sensor.getValue(),self.__ds1_sensor.getValue()]
         #return self.__ds1_sensor.getValue()
+
+class FugitiveRobotGPS():
+
+    def __init__(self):
+        self.__gps = GPS('gps')
+    
+    def enable(self,timestep:int) -> None :
+        self.__gps.enable(timestep)
+
+    def getCoordinates(self):
+        return self.__gps.getCoordinateSystem()
 
 robot = FugitiveRobot()
 timestep = int(robot.getBasicTimeStep())
@@ -97,9 +122,9 @@ while robot.step(timestep) != -1:
     # Read the sensors:
     # Enter here functions to read sensor data, like:
     robot.distances.enable(timestep)
-    val = robot.distances.getDistanceValue()
-    #val = robot.getDistance()
+    #val = robot.distances.getDistanceValue()
+    #val = robot.getDistance() 
+    val = robot.gps.getCoordinates()
     print(val)
     #robot.run()
 
-# Enter here exit cleanup code.
