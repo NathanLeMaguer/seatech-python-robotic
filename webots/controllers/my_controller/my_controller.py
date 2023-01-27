@@ -64,40 +64,20 @@ class FugitiveRobotMotors():
     
 class FugitiveRobotSensors():
     def __init__(self):
-        self.__ds0_sensor = DistanceSensor('ds0')
-        self.__ds1_sensor = DistanceSensor('ds1')
-        self.__ds10_sensor = DistanceSensor('ds10')
-        self.__ds2_sensor = DistanceSensor('ds2')
-        self.__ds3_sensor = DistanceSensor('ds3')
-        self.__ds4_sensor = DistanceSensor('ds4')
-        self.__ds5_sensor = DistanceSensor('ds5')
-        self.__ds6_sensor = DistanceSensor('ds6')
-        self.__ds7_sensor = DistanceSensor('ds7')
-        self.__ds8_sensor = DistanceSensor('ds8')
-        self.__ds9_sensor = DistanceSensor('ds9')
-        self.__us0_sensor = DistanceSensor('us0')
-        self.__us1_sensor = DistanceSensor('us1')
-        self.__us2_sensor = DistanceSensor('us2')
-        self.__us3_sensor = DistanceSensor('us3')
-        self.__us4_sensor = DistanceSensor('us4')
+
+        for i in range(11):
+            self.__ds[i]  = DistanceSensor(f'ds{i}')
+
+        for j in range(5):
+            self.__us[i]  = DistanceSensor(f'us{i}')
     
     def enable(self,timestep:int) -> None :
-        self.__ds0_sensor.enable(timestep)
-        self.__ds1_sensor.enable(timestep)
-        self.__ds10_sensor.enable(timestep)
-        self.__ds2_sensor.enable(timestep)
-        self.__ds3_sensor.enable(timestep)
-        self.__ds4_sensor.enable(timestep)
-        self.__ds5_sensor.enable(timestep)
-        self.__ds6_sensor.enable(timestep)
-        self.__ds7_sensor.enable(timestep)
-        self.__ds8_sensor.enable(timestep)
-        self.__ds9_sensor.enable(timestep)
-        self.__us0_sensor.enable(timestep)
-        self.__us1_sensor.enable(timestep)
-        self.__us2_sensor.enable(timestep)
-        self.__us3_sensor.enable(timestep)
-        self.__us4_sensor.enable(timestep)
+
+        for i in range(11):
+            self.__ds[i].enable(timestep)
+
+        for j in range(5):
+            self.__us[i].enable(timestep)
 
     def getDistanceValue(self):
         return [self.__ds0_sensor.getValue(),self.__ds1_sensor.getValue()]
