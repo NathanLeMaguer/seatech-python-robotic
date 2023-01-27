@@ -34,6 +34,30 @@ class FugitiveRobot(Robot):
         self.__gps.enable(timestep)
         return self.__gps.getCoordinates()
 
+    def checkArenaCoordinates(self):
+
+        border = { 
+            "left":-3.5,
+            "right":3.5,
+            "front":3.5,
+            "back":-3.5
+        }
+
+        mapLimit = 0.2
+
+        coordinates = self.coordinates(timestep) 
+
+        distances = []
+
+        for key, value in border.items():
+            distances.append(abs(coordinates[0]-border[key]))
+            distances.append(abs(coordinates[1]-border[key]))
+        distances = min(distances)
+
+        if(distances < mapLimit): 
+            print("Arrêt nécessaire")
+        print(distances)   
+
 class FugitiveRobotMotor(Motor): 
 
     def __init__(self, name=None):
@@ -65,25 +89,30 @@ class FugitiveRobotMotors():
 class FugitiveRobotSensors():
     def __init__(self):
 
+        self.__ds = []
         for i in range(11):
-            self.__ds[i]  = DistanceSensor(f'ds{i}')
+            self.__ds.append(DistanceSensor(f'ds{i}')) 
 
+        self.__us = []
         for j in range(5):
-            self.__us[i]  = DistanceSensor(f'us{i}')
+            self.__us.append(DistanceSensor(f'us{j}'))
     
     def enable(self,timestep:int) -> None :
 
-        for i in range(11):
+        for i in range(len(self.__ds)):
             self.__ds[i].enable(timestep)
 
-        for j in range(5):
-            self.__us[i].enable(timestep)
+        for j in range(len(self.__us)):
+            self.__us[j].enable(timestep)
 
     def getDistanceValue(self):
-        return [self.__ds0_sensor.getValue(),self.__ds1_sensor.getValue()]
-        #return self.__ds1_sensor.getValue()
+        pass
+        #return [self.__ds0_sensor.getValue(),self.__ds1_sensor.getValue()]
+        return self.__ds[0].getValue()
 
 class FugitiveRobotGPS():
+    # def getCoordinates(self):
+    #     return self.__gps.getValues()
 
     def __init__(self):
         self.__gps = GPS('gps')
@@ -92,19 +121,22 @@ class FugitiveRobotGPS():
         self.__gps.enable(timestep)
 
     def getCoordinates(self):
-        return self.__gps.getCoordinateSystem()
+        return self.__gps.value[0], self.__gps.value[1]
 
 robot = FugitiveRobot()
 timestep = int(robot.getBasicTimeStep())
 
 while robot.step(timestep) != -1:
+    pass
     # Read the sensors:
     # Enter here functions to read sensor data, like:
 
-    #val = robot.distances.getDistanceValue()
     #val = robot.distance_detection() 
+    
+    #val = robot.coordinates(timestep)
+    #print(val)
 
-    val = robot.coordinates(timestep)
-    print(val)
+    robot.checkArenaCoordinates()
+
     #robot.run()
 
