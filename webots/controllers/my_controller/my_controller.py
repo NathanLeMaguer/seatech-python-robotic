@@ -9,6 +9,8 @@
 # https://cyberbotics.com/doc/guide/khepera3 -> Robot parameters 
 
 from controller import *
+from math import * 
+import time
 
 class FugitiveRobot(Robot):
     def __init__(self):
@@ -33,6 +35,17 @@ class FugitiveRobot(Robot):
     def coordinates(self, timestep):
         self.__gps.enable(timestep)
         return self.__gps.getCoordinates()
+
+    def move(self):
+
+        distance = self.distance_detection()
+        print(distance)
+        
+        if (distance > 100):
+            #self.run(backward=True, left=True)
+            print("Recule, bip, bip")
+        else:
+            self.run(forward=True)
 
     def checkArenaCoordinates(self):
 
@@ -106,9 +119,13 @@ class FugitiveRobotSensors():
             self.__us[j].enable(timestep)
 
     def getDistanceValue(self):
-        pass
-        #return [self.__ds0_sensor.getValue(),self.__ds1_sensor.getValue()]
-        return self.__ds[0].getValue()
+
+        for i in range(11):
+            for j in range(5):
+                #return self.__ds[i].getValue(),self.__us[j].getValue()]
+                #return self.__ds[5].getValue()
+                return self.__ds[i].getValue()
+        #return self.__ds[0].getValue()
 
 class FugitiveRobotGPS():
     # def getCoordinates(self):
@@ -126,17 +143,24 @@ class FugitiveRobotGPS():
 robot = FugitiveRobot()
 timestep = int(robot.getBasicTimeStep())
 
+i = 0
+
 while robot.step(timestep) != -1:
     pass
     # Read the sensors:
     # Enter here functions to read sensor data, like:
 
     #val = robot.distance_detection() 
-    
-    #val = robot.coordinates(timestep)
-    #print(val)
+    # if(not i%10):
+        #     print(val)
+        # i = i+1
 
-    robot.checkArenaCoordinates()
+    #val = robot.coordinates(timestep)
+
+    robot.move()
+
+    # robot.run(forward=True)
+    # robot.checkArenaCoordinates()
 
     #robot.run()
 
