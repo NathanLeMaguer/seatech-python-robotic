@@ -41,21 +41,18 @@ class FugitiveRobot(Robot):
         return self.__gps.getCoordinates()
 
     def move(self):
-        
-        self.GPS_flag = self.checkArenaCoordinates()
 
         #distance = self.distance_detection()
         #print(distance)
         
-        print(self.checkArenaCoordinates(), self.time)
         if(self.checkArenaCoordinates() and self.time_flag == False):
             self.capture_time = (self.time - 0.01)
             self.time_flag = True
-            print('\n',self.time - self.capture_time, self.time_flag)
-        if(self.time_flag == True and self.time - self.capture_time < 5):
-
-            self.run(backward=True, forward=False, left=False)
-            print("Recule, bip, bip")
+        if(self.time_flag == True and self.time - self.capture_time < 3.5):
+            if(self.time - self.capture_time < 2.5):
+                self.run(backward=True, forward=False, left=False)
+            else:
+                self.run(backward=False, forward=False, left=True)
         else:
             self.run(forward=True, left=False, backward=False)
             self.time_flag = False 
@@ -107,8 +104,8 @@ class FugitiveRobotMotors():
         self.__right_wheel_motor.setVelocity(15)
 
     def go_back(self):
-        self.__left_wheel_motor.setVelocity(-5)
-        self.__right_wheel_motor.setVelocity(-5)
+        self.__left_wheel_motor.setVelocity(-15)
+        self.__right_wheel_motor.setVelocity(-15)
 
     def go_left(self):
         self.__left_wheel_motor.setVelocity(-5)
