@@ -18,6 +18,10 @@ class FugitiveRobot(Robot):
          self.__motors = FugitiveRobotMotors()
          self.__distances = FugitiveRobotSensors()
          self.__gps = FugitiveRobotGPS()
+         self.time_flag = False 
+         self.capture_time = 0
+         self.GPS_flag = False
+         
          
     def run(self, backward=False, forward=False, left=False, right=False):
         if (forward == True) : 
@@ -43,19 +47,19 @@ class FugitiveRobot(Robot):
         #distance = self.distance_detection()
         #print(distance)
         
-        # if (distance > 100):
-        #     time = self.time #
-        #     if(self.time < time + 2000):
-        #         #self.run(backward=True, left=True)
-        #         print("Recule, bip, bip")
-        # else:
-        #     self.run(forward=True)
+        print(self.checkArenaCoordinates(), self.time)
+        if(self.checkArenaCoordinates() and self.time_flag == False):
+            self.capture_time = (self.time - 0.01)
+            self.time_flag = True
+            print('\n',self.time - self.capture_time, self.time_flag)
+        if(self.time_flag == True and self.time - self.capture_time < 5):
 
-        if(self.GPS_flag == False):
-            self.run(forward=True, left=False)
+            self.run(backward=True, forward=False, left=False)
+            print("Recule, bip, bip")
         else:
-            self.run(left=True, forward=False)
-
+            self.run(forward=True, left=False, backward=False)
+            self.time_flag = False 
+            
     def checkArenaCoordinates(self):
 
         border = { 
@@ -82,7 +86,7 @@ class FugitiveRobot(Robot):
         else :
             self.GPS_flag = False 
 
-        print(distances)  
+        #print(distances)  
         return self.GPS_flag
 
 
@@ -99,8 +103,8 @@ class FugitiveRobotMotors():
         self.__right_wheel_motor = FugitiveRobotMotor('right wheel motor')
 
     def go_front(self):
-        self.__left_wheel_motor.setVelocity(5)
-        self.__right_wheel_motor.setVelocity(5)
+        self.__left_wheel_motor.setVelocity(15)
+        self.__right_wheel_motor.setVelocity(15)
 
     def go_back(self):
         self.__left_wheel_motor.setVelocity(-5)
