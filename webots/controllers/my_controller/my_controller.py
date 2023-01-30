@@ -30,7 +30,7 @@ class FugitiveRobot(Robot):
             self.__motors.go_right()
 
     def distance_detection(self):
-        return self.__distances.getDistanceValue()
+        return self.__distances.MiniDistance()
 
     def coordinates(self, timestep):
         self.__gps.enable(timestep)
@@ -41,13 +41,13 @@ class FugitiveRobot(Robot):
         distance = self.distance_detection()
         print(distance)
         
-        if (distance > 100):
-            time = self.time #
-            if(self.time < time + 2000):
-                #self.run(backward=True, left=True)
-                print("Recule, bip, bip")
-        else:
-            self.run(forward=True)
+        # if (distance > 100):
+        #     time = self.time #
+        #     if(self.time < time + 2000):
+        #         #self.run(backward=True, left=True)
+        #         print("Recule, bip, bip")
+        # else:
+        #     self.run(forward=True)
 
     def checkArenaCoordinates(self):
 
@@ -69,8 +69,14 @@ class FugitiveRobot(Robot):
             distances.append(abs(coordinates[1]-border[key]))
         distances = min(distances)
 
+        self.run(forward=True, backward=False)
         if(distances < mapLimit): 
             print("Arrêt nécessaire")
+            time = self.time
+            if(self.time < time + 2000):
+                self.run(backward=True, forward=False)
+                print("Recule, bip, bip")
+
         print(distances)   
 
 class FugitiveRobotMotor(Motor): 
@@ -134,13 +140,12 @@ class FugitiveRobotSensors():
 
     def MiniDistance(self):
 
-        list = self.getDistanceValue
+        liste = self.getDistanceValue()
         max_value = 0
-        id = 0
 
-        for i in range(len(list)):
-            if(list[i] > max_value):
-                max_value = list[i]
+        for i in range(len(liste)):
+            if(liste[i] > max_value):
+                max_value = liste[i]
 
         print('\nValeur distance min : ', max_value)
 
@@ -172,10 +177,9 @@ while robot.step(timestep) != -1:
 
     #val = robot.coordinates(timestep)
 
-    robot.move()
-
-    # robot.run(forward=True)
-    # robot.checkArenaCoordinates()
-
+    #robot.move()
+    robot.checkArenaCoordinates()
+    #robot.run(forward=True)
+    
     #robot.run()
 
