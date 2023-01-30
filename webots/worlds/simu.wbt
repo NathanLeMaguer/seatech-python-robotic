@@ -1,0 +1,95 @@
+#VRML_SIM R2023a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "../protos/CircleArena.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/appearances/protos/MattePaint.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/toys/protos/RubberDuck.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/solids/protos/SolidBox.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/robots/k-team/khepera3/protos/Khepera3.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/traffic/protos/TrafficCone.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2023a/projects/objects/drinks/protos/Can.proto"
+
+WorldInfo {
+}
+Viewpoint {
+  orientation -0.3136116948243538 0.6880793939034805 0.6543656871771435 1.3092016530796702
+  position -1.2874989262631038 -4.322178837877966 9.476429992063425
+}
+TexturedBackground {
+  texture "noon_stormy_empty"
+}
+TexturedBackgroundLight {
+  luminosity 1.5
+}
+RubberDuck {
+  translation 3.7187570836007597 3.7339452327952554 2.178291746693569
+  rotation 0.023978945966255005 0.006550800999011657 0.9996910008380684 0.7167450899479414
+  name "duck1"
+  scale 7
+}
+RubberDuck {
+  translation -3.7373085912438335 -3.6948138226286438 2.1782889765939455
+  rotation 0.005120896628935719 -0.008323556408712558 0.9999522462730043 -2.2165819061012444
+  name "duck3"
+  scale 7
+  bodyColor 0.878431 0.105882 0.141176
+}
+RubberDuck {
+  translation -3.7260994161914813 3.7440128938077026 2.180441067887922
+  rotation 0.006507716673620941 -0.001953247869501388 0.9999769169568147 2.4027460636702487
+  name "duck4"
+  scale 7
+  bodyColor 0.878431 0.105882 0.141176
+}
+RubberDuck {
+  translation 3.73002106777606 -3.6961918983565694 2.1782876375550693
+  rotation 0.0202592846127308 -0.010754958300591158 -0.9997369115216928 0.7832157901559377
+  name "duck2"
+  scale 7
+  bodyColor 0.180392 0.760784 0.494118
+}
+CircleArena {
+  name "defeat arena"
+  radius 8
+  floorAppearance MattePaint {
+    baseColor 0.300008 0.0119936 0.0119936
+  }
+}
+SolidBox {
+  translation 0 0 2
+  rotation 0.707084957913509 0.707084957913509 0.007856499532372323 0
+  name "arena"
+  size 8 8 0.1
+  appearance PBRAppearance {
+    baseColor 0 0 0
+    baseColorMap ImageTexture {
+    }
+    roughness 0.5
+    metalness 0
+  }
+}
+Can {
+  translation 0.659829 0.240025 2.11093
+  rotation -0.68864050054364 -0.7198360651910941 0.08723703491756152 0.0010419216344139809
+}
+Khepera3 {
+  hidden position_0_0 113.1199894946731
+  hidden position_0_1 113.1199894968073
+  hidden translation_1 0 0.04579999999999949 0.0245
+  hidden rotation_1 0.5729408800411429 -0.5729408792650194 -0.5860695324316966 2.0813654841756293
+  hidden translation_2 0 -0.04579999999999939 0.0245
+  hidden rotation_2 0.5729408796210407 -0.5729408788449174 -0.5860695332530789 2.0813654829528594
+  translation 2.47166 1.47002e-05 2.0444
+  rotation -9.869106110867359e-05 0.9999846585119648 0.005538321115949661 0.0010996107776938611
+  name "Jugitive "
+  controller "my_controller"
+  turretSlot [
+    GPS {
+      description "gps"
+    }
+  ]
+}
+TrafficCone {
+  translation 1.72 3.52 2.07
+}
