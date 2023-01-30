@@ -38,8 +38,10 @@ class FugitiveRobot(Robot):
 
     def move(self):
         
-        distance = self.distance_detection()
-        print(distance)
+        self.GPS_flag = self.checkArenaCoordinates()
+
+        #distance = self.distance_detection()
+        #print(distance)
         
         # if (distance > 100):
         #     time = self.time #
@@ -48,6 +50,11 @@ class FugitiveRobot(Robot):
         #         print("Recule, bip, bip")
         # else:
         #     self.run(forward=True)
+
+        if(self.GPS_flag == False):
+            self.run(forward=True, left=False)
+        else:
+            self.run(left=True, forward=False)
 
     def checkArenaCoordinates(self):
 
@@ -69,15 +76,15 @@ class FugitiveRobot(Robot):
             distances.append(abs(coordinates[1]-border[key]))
         distances = min(distances)
 
-        self.run(forward=True, backward=False)
-        if(distances < mapLimit): 
-            print("Arrêt nécessaire")
-            time = self.time
-            if(self.time < time + 2000):
-                self.run(backward=True, forward=False)
-                print("Recule, bip, bip")
+        
+        if(distances < mapLimit and self.GPS_flag == False): 
+            self.GPS_flag = True  
+        else :
+            self.GPS_flag = False 
 
-        print(distances)   
+        print(distances)  
+        return self.GPS_flag
+
 
 class FugitiveRobotMotor(Motor): 
 
@@ -177,8 +184,8 @@ while robot.step(timestep) != -1:
 
     #val = robot.coordinates(timestep)
 
-    #robot.move()
-    robot.checkArenaCoordinates()
+    robot.move()
+    #robot.checkArenaCoordinates()
     #robot.run(forward=True)
     
     #robot.run()
