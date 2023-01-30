@@ -37,13 +37,15 @@ class FugitiveRobot(Robot):
         return self.__gps.getCoordinates()
 
     def move(self):
-
+        
         distance = self.distance_detection()
         print(distance)
         
         if (distance > 100):
-            #self.run(backward=True, left=True)
-            print("Recule, bip, bip")
+            time = self.time #
+            if(self.time < time + 2000):
+                #self.run(backward=True, left=True)
+                print("Recule, bip, bip")
         else:
             self.run(forward=True)
 
@@ -120,16 +122,29 @@ class FugitiveRobotSensors():
 
     def getDistanceValue(self):
 
+        self.listeDistances = []
+
         for i in range(11):
             for j in range(5):
                 #return self.__ds[i].getValue(),self.__us[j].getValue()]
                 #return self.__ds[5].getValue()
-                return self.__ds[i].getValue()
-        #return self.__ds[0].getValue()
+                self.listeDistances.append(self.__ds[i].getValue())
+
+        return self.listeDistances
+
+    def MiniDistance(self):
+
+        list = self.getDistanceValue
+        max_value = 0
+        id = 0
+
+        for i in range(len(list)):
+            if(list[i] > max_value):
+                max_value = list[i]
+
+        print('\nValeur distance min : ', max_value)
 
 class FugitiveRobotGPS():
-    # def getCoordinates(self):
-    #     return self.__gps.getValues()
 
     def __init__(self):
         self.__gps = GPS('gps')
